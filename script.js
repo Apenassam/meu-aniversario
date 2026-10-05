@@ -162,7 +162,7 @@ const produtos = [
     {
         id: 24,
         nome: "Tesoura Metzenbaum",
-        preco: null
+        preco: 88.00
     },
 
     {
