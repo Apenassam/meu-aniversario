@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Minha Lista de Instrumentais 🦷</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+    <!-- HERO -->
+    <header class="hero">
+
+        <div class="hero-content">
+
+            <span class="tag">
+                🦷 LISTA DE PRESENTES
+            </span>
+
+            <h1>
+                Minha lista de<br>
+                <span>instrumentais odontológicos</span>
+            </h1>
+
+            <p>
+                Estou começando uma nova etapa na Odontologia
+                e criei esta lista para quem quiser me presentear
+                com algum dos instrumentais que vou precisar.
+            </p>
+
+            <a href="#lista" class="btn-principal">
+                Ver minha lista
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <!-- INTRODUÇÃO -->
+        <section class="introducao">
+
+            <span class="mini-titulo">
+                PARA O PRÓXIMO PERÍODO
+            </span>
+
+            <h2>
+                Um presente que vai fazer parte<br>
+                da minha formação 🩷
+            </h2>
+
+            <p>
+                Cada item abaixo faz parte da minha lista de materiais
+                para a faculdade. Você pode escolher o que gostaria
+                de me dar e o item ficará reservado para você.
+            </p>
+
+        </section>
+
+
+        <!-- LISTA -->
+        <section id="lista" class="lista-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="mini-titulo">
+                        INSTRUMENTAIS
+                    </span>
+
+                    <h2>
+                        Minha lista
+                    </h2>
+
+                </div>
+
+                <div class="contador">
+
+                    <span id="contador">
+                        0
+                    </span>
+
+                    itens disponíveis
+
+                </div>
+
+            </div>
+
+
+            <!-- Mensagem de carregamento -->
+            <div id="carregando" class="carregando">
+                Carregando minha lista...
+            </div>
+
+
+            <!-- Mensagem de erro -->
+            <div id="erro" class="erro hidden">
+
+                Não foi possível carregar a lista.
+                Atualize a página e tente novamente.
+
+            </div>
+
+
+            <!-- Produtos -->
+            <div
+                id="lista-produtos"
+                class="produtos"
+            ></div>
+
+        </section>
+
+
+        <!-- RESUMO -->
+        <section
+            id="resumo"
+            class="resumo hidden"
+        >
+
+            <div>
+
+                <span class="mini-titulo">
+                    SELEÇÃO
+                </span>
+
+                <h2>
+                    Você escolheu:
+                </h2>
+
+                <div id="itens-escolhidos"></div>
+
+            </div>
+
+
+            <button
+                class="btn-presentear"
+                onclick="finalizarPresente()"
+            >
+                Continuar
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- MODAL DE RESERVA -->
+    <div
+        id="modal-reserva"
+        class="modal hidden"
+    >
+
+        <div
+            class="modal-fundo"
+            onclick="fecharModal()"
+        ></div>
+
+
+        <div class="modal-conteudo">
+
+            <button
+                class="modal-fechar"
+                onclick="fecharModal()"
+                aria-label="Fechar"
+            >
+                ×
+            </button>
+
+
+            <span class="mini-titulo">
+                UM PRESENTE ESPECIAL 🩷
+            </span>
+
+
+            <h2>
+                Você quer me presentear com:
+            </h2>
+
+
+            <div
+                id="produto-modal"
+                class="produto-modal"
+            ></div>
+
+
+            <form id="form-reserva">
+
+                <!-- NOME -->
+                <label for="nome">
+                    Seu nome
+                </label>
+
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    placeholder="Como posso te chamar?"
+                    maxlength="100"
+                    required
+                >
+
+
+                <!-- E-MAIL -->
+                <label for="email">
+                    Seu e-mail
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="seuemail@email.com"
+                    maxlength="150"
+                    required
+                >
+
+
+                <!-- CPF -->
+                <label for="cpf">
+                    CPF
+                </label>
+
+                <input
+                    type="text"
+                    id="cpf"
+                    name="cpf"
+                    placeholder="000.000.000-00"
+                    maxlength="14"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    required
+                >
+
+
+                <!-- MENSAGEM -->
+                <label for="mensagem">
+
+                    Mensagem
+                    <span>(opcional)</span>
+
+                </label>
+
+                <textarea
+                    id="mensagem"
+                    name="mensagem"
+                    placeholder="Se quiser, deixe uma mensagem para mim 🩷"
+                    maxlength="500"
+                    rows="4"
+                ></textarea>
+
+
+                <!-- BOTÃO -->
+                <button
+                    type="submit"
+                    class="btn-confirmar"
+                    id="btn-confirmar"
+                >
+                    Confirmar presente
+                </button>
+
+            </form>
+
+
+            <!-- MENSAGEM DE ERRO -->
+            <div
+                id="mensagem-modal"
+                class="mensagem-modal hidden"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONFIRMAÇÃO -->
+ <!-- PAGAMENTO PIX -->
+<div
+    id="modal-pix"
+    class="modal hidden"
+>
+
+    <div class="modal-fundo"></div>
+
+    <div class="modal-conteudo pagamento-pix">
+
+        <div class="icone-sucesso">
+            ✓
+        </div>
+
+        <span class="mini-titulo">
+            PRESENTE RESERVADO 🩷
+        </span>
+
+        <h2>
+            Agora é só realizar o Pix
+        </h2>
+
+        <p id="pix-descricao">
+            Seu presente foi reservado com sucesso.
+        </p>
+
+        <!-- VALOR -->
+        <div class="pix-valor">
+
+            <span>
+                Valor do presente
+            </span>
+
+            <strong id="pix-valor">
+                R$ 0,00
+            </strong>
+
+        </div>
+
+
+        <!-- QR CODE -->
+        <div class="pix-qr-area">
+
+            <div
+                id="pix-qr-loading"
+                class="pix-loading"
+            >
+                Gerando seu Pix...
+            </div>
+
+            <img
+                id="pix-qr-code"
+                class="pix-qr-code hidden"
+                alt="QR Code para pagamento Pix"
+            >
+
+        </div>
+
+
+        <!-- COPIA E COLA -->
+        <div
+            id="pix-copia-area"
+            class="pix-copia-area hidden"
+        >
+
+            <label for="pix-codigo">
+                Pix Copia e Cola
+            </label>
+
+            <div class="pix-copia">
+
+                <input
+                    type="text"
+                    id="pix-codigo"
+                    readonly
+                >
+
+                <button
+                    type="button"
+                    id="btn-copiar-pix"
+                >
+                    Copiar
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATUS -->
+        <div
+            id="pix-status"
+            class="pix-status"
+        >
+            Aguardando pagamento...
+        </div>
+
+
+        <button
+            type="button"
+            class="btn-confirmar"
+            onclick="fecharPix()"
+        >
+            Voltar para a lista
+        </button>
+
+    </div>
+
+</div>
+
+
+    <!-- RODAPÉ -->
+    <footer>
+
+        <p>
+            Feito com carinho para uma futura dentista 🦷🤍
+        </p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
