@@ -155,7 +155,7 @@ const produtos = [
 
     {
         id: 23,
-        nome: "Pinça hemostática curva ",
+        nome: "Pinça hemostática curva",
         preco: 36.76
     },
 
@@ -194,10 +194,6 @@ const produtos = [
 
 /* =========================================================
    IMAGENS DOS PRODUTOS
-
-   Quando você colocar uma nova imagem na pasta "img",
-   basta adicionar aqui:
-   id: "img/nome-da-imagem.png"
 ========================================================= */
 
 const imagensProdutos = {
@@ -224,11 +220,11 @@ const imagensProdutos = {
 
     11: "img/Fórceps 151.png",
 
-    12:"img/Fórceps 16.png",
+    12: "img/Fórceps 16.png",
 
-    13:"img/Fórceps 17.png",
+    13: "img/Fórceps 17.png",
 
-    14:"img/Fórceps 18 L.png",
+    14: "img/Fórceps 18 L.png",
 
     15: "img/Fórceps 18 R.png",
 
@@ -258,7 +254,6 @@ const imagensProdutos = {
 
     28: "img/Tesoura Goldman Fox reta.png"
 
-  
 };
 
 
@@ -614,13 +609,15 @@ function abrirModal(id) {
 
     `;
 
+    /*
+       O formulário agora pede somente:
+       - Nome
+       - Mensagem opcional
+
+       Não existe mais e-mail nem CPF nessa etapa.
+    */
+
     document.getElementById("nome").value =
-        "";
-
-    document.getElementById("email").value =
-        "";
-
-    document.getElementById("cpf").value =
         "";
 
     document.getElementById("mensagem").value =
@@ -758,18 +755,6 @@ async function reservarPresente(event) {
             .value
             .trim();
 
-    const email =
-        document
-            .getElementById("email")
-            .value
-            .trim();
-
-    const cpf =
-        document
-            .getElementById("cpf")
-            .value
-            .trim();
-
     const mensagem =
         document
             .getElementById("mensagem")
@@ -788,57 +773,13 @@ async function reservarPresente(event) {
 
 
     /* =====================================================
-       VALIDAÇÕES
+       VALIDAÇÃO
     ===================================================== */
 
     if (!nome) {
 
         mensagemModal.textContent =
             "Por favor, coloque seu nome.";
-
-        mensagemModal.classList.remove(
-            "hidden"
-        );
-
-        return;
-
-    }
-
-    if (!email) {
-
-        mensagemModal.textContent =
-            "Por favor, coloque seu e-mail.";
-
-        mensagemModal.classList.remove(
-            "hidden"
-        );
-
-        return;
-
-    }
-
-    if (!cpf) {
-
-        mensagemModal.textContent =
-            "Por favor, coloque seu CPF.";
-
-        mensagemModal.classList.remove(
-            "hidden"
-        );
-
-        return;
-
-    }
-
-    const cpfNumeros =
-        cpf.replace(/\D/g, "");
-
-    if (
-        cpfNumeros.length !== 11
-    ) {
-
-        mensagemModal.textContent =
-            "Por favor, coloque um CPF válido.";
 
         mensagemModal.classList.remove(
             "hidden"
@@ -906,7 +847,7 @@ async function reservarPresente(event) {
 
 
         /* =================================================
-           1. CRIAR CHECKOUT ASAAS PRIMEIRO
+           1. CRIAR CHECKOUT ASAAS
         ================================================= */
 
         const checkout =
@@ -918,7 +859,7 @@ async function reservarPresente(event) {
 
 
         /* =================================================
-           2. AGORA RESERVAR O PRESENTE
+           2. RESERVAR O PRESENTE NO SUPABASE
         ================================================= */
 
         botao.textContent =
@@ -937,31 +878,21 @@ async function reservarPresente(event) {
                     nome,
 
                 p_mensagem:
-                    mensagem || null,
-
-                p_email:
-                    email,
-
-                p_documento_tipo:
-                    "CPF",
-
-                p_documento_numero:
-                    cpfNumeros,
-
-                /* ID do Checkout Asaas */
-                p_pagamento_id:
-                    checkout.checkout_id
+                    mensagem || null
             }
         );
+
 
         if (reservaError) {
             throw reservaError;
         }
 
+
         const reservaResultado =
             Array.isArray(reservaData)
                 ? reservaData[0]
                 : reservaData;
+
 
         if (
             !reservaResultado ||
@@ -1196,12 +1127,19 @@ function configurarBotaoCopiarPix() {
    FORMULÁRIO
 ========================================================= */
 
-document
-    .getElementById("form-reserva")
-    .addEventListener(
+const formularioReserva =
+    document.getElementById(
+        "form-reserva"
+    );
+
+if (formularioReserva) {
+
+    formularioReserva.addEventListener(
         "submit",
         reservarPresente
     );
+
+}
 
 
 /* =========================================================
