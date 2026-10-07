@@ -15,7 +15,10 @@
 
 <body>
 
-    <!-- HERO -->
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
     <header class="hero">
 
         <div class="hero-content">
@@ -35,7 +38,10 @@
                 com algum dos instrumentais que vou precisar.
             </p>
 
-            <a href="#lista" class="btn-principal">
+            <a
+                href="#lista"
+                class="btn-principal"
+            >
                 Ver minha lista
             </a>
 
@@ -44,9 +50,16 @@
     </header>
 
 
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+    ====================================================== -->
+
     <main>
 
-        <!-- INTRODUÇÃO -->
+        <!-- =================================================
+             INTRODUÇÃO
+        ================================================== -->
+
         <section class="introducao">
 
             <span class="mini-titulo">
@@ -67,8 +80,14 @@
         </section>
 
 
-        <!-- LISTA -->
-        <section id="lista" class="lista-section">
+        <!-- =================================================
+             LISTA DE INSTRUMENTAIS
+        ================================================== -->
+
+        <section
+            id="lista"
+            class="lista-section"
+        >
 
             <div class="section-header">
 
@@ -84,6 +103,7 @@
 
                 </div>
 
+
                 <div class="contador">
 
                     <span id="contador">
@@ -98,21 +118,28 @@
 
 
             <!-- Mensagem de carregamento -->
-            <div id="carregando" class="carregando">
+
+            <div
+                id="carregando"
+                class="carregando"
+            >
                 Carregando minha lista...
             </div>
 
 
             <!-- Mensagem de erro -->
-            <div id="erro" class="erro hidden">
 
+            <div
+                id="erro"
+                class="erro hidden"
+            >
                 Não foi possível carregar a lista.
                 Atualize a página e tente novamente.
-
             </div>
 
 
             <!-- Produtos -->
+
             <div
                 id="lista-produtos"
                 class="produtos"
@@ -120,45 +147,19 @@
 
         </section>
 
-
-        <!-- RESUMO -->
-        <section
-            id="resumo"
-            class="resumo hidden"
-        >
-
-            <div>
-
-                <span class="mini-titulo">
-                    SELEÇÃO
-                </span>
-
-                <h2>
-                    Você escolheu:
-                </h2>
-
-                <div id="itens-escolhidos"></div>
-
-            </div>
-
-
-            <button
-                class="btn-presentear"
-                onclick="finalizarPresente()"
-            >
-                Continuar
-            </button>
-
-        </section>
-
     </main>
 
 
-    <!-- MODAL DE RESERVA -->
+    <!-- =====================================================
+         MODAL DE RESERVA
+    ====================================================== -->
+
     <div
         id="modal-reserva"
         class="modal hidden"
     >
+
+        <!-- Fundo do modal -->
 
         <div
             class="modal-fundo"
@@ -166,9 +167,19 @@
         ></div>
 
 
-        <div class="modal-conteudo">
+        <!-- Conteúdo do modal -->
+
+        <div
+            class="modal-conteudo"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="titulo-modal"
+        >
+
+            <!-- Botão fechar -->
 
             <button
+                type="button"
                 class="modal-fechar"
                 onclick="fecharModal()"
                 aria-label="Fechar"
@@ -177,15 +188,19 @@
             </button>
 
 
+            <!-- Título -->
+
             <span class="mini-titulo">
                 UM PRESENTE ESPECIAL 🩷
             </span>
 
 
-            <h2>
+            <h2 id="titulo-modal">
                 Você quer me presentear com:
             </h2>
 
+
+            <!-- Produto selecionado -->
 
             <div
                 id="produto-modal"
@@ -193,9 +208,18 @@
             ></div>
 
 
+            <!-- =================================================
+                 FORMULÁRIO DE RESERVA
+
+                 Agora pedimos somente:
+                 - Nome
+                 - Mensagem opcional
+            ================================================== -->
+
             <form id="form-reserva">
 
                 <!-- NOME -->
+
                 <label for="nome">
                     Seu nome
                 </label>
@@ -206,43 +230,13 @@
                     name="nome"
                     placeholder="Como posso te chamar?"
                     maxlength="100"
-                    required
-                >
-
-
-                <!-- E-MAIL -->
-                <label for="email">
-                    Seu e-mail
-                </label>
-
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="seuemail@email.com"
-                    maxlength="150"
-                    required
-                >
-
-
-                <!-- CPF -->
-                <label for="cpf">
-                    CPF
-                </label>
-
-                <input
-                    type="text"
-                    id="cpf"
-                    name="cpf"
-                    placeholder="000.000.000-00"
-                    maxlength="14"
-                    inputmode="numeric"
-                    autocomplete="off"
+                    autocomplete="name"
                     required
                 >
 
 
                 <!-- MENSAGEM -->
+
                 <label for="mensagem">
 
                     Mensagem
@@ -260,6 +254,7 @@
 
 
                 <!-- BOTÃO -->
+
                 <button
                     type="submit"
                     class="btn-confirmar"
@@ -271,10 +266,12 @@
             </form>
 
 
-            <!-- MENSAGEM DE ERRO -->
+            <!-- Mensagem de erro -->
+
             <div
                 id="mensagem-modal"
                 class="mensagem-modal hidden"
+                role="alert"
             ></div>
 
         </div>
@@ -282,119 +279,165 @@
     </div>
 
 
-    <!-- CONFIRMAÇÃO -->
- <!-- PAGAMENTO PIX -->
-<div
-    id="modal-pix"
-    class="modal hidden"
->
+    <!-- =====================================================
+         MODAL DE PAGAMENTO
+         
+         Mantido porque o script.js ainda possui as funções
+         relacionadas a essa estrutura.
+    ====================================================== -->
 
-    <div class="modal-fundo"></div>
+    <div
+        id="modal-pix"
+        class="modal hidden"
+    >
 
-    <div class="modal-conteudo pagamento-pix">
+        <!-- Fundo -->
 
-        <div class="icone-sucesso">
-            ✓
-        </div>
+        <div
+            class="modal-fundo"
+            onclick="fecharPix()"
+        ></div>
 
-        <span class="mini-titulo">
-            PRESENTE RESERVADO 🩷
-        </span>
 
-        <h2>
-            Agora é só realizar o Pix
-        </h2>
+        <!-- Conteúdo -->
 
-        <p id="pix-descricao">
-            Seu presente foi reservado com sucesso.
-        </p>
+        <div
+            class="modal-conteudo pagamento-pix"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="titulo-pagamento"
+        >
 
-        <!-- VALOR -->
-        <div class="pix-valor">
+            <!-- Ícone -->
 
-            <span>
-                Valor do presente
+            <div class="icone-sucesso">
+                ✓
+            </div>
+
+
+            <!-- Título -->
+
+            <span class="mini-titulo">
+                PRESENTE RESERVADO 🩷
             </span>
 
-            <strong id="pix-valor">
-                R$ 0,00
-            </strong>
 
-        </div>
+            <h2 id="titulo-pagamento">
+                Agora é só realizar o Pix
+            </h2>
 
 
-        <!-- QR CODE -->
-        <div class="pix-qr-area">
+            <!-- Descrição -->
+
+            <p id="pix-descricao">
+                Seu presente foi reservado com sucesso.
+            </p>
+
+
+            <!-- =================================================
+                 VALOR
+            ================================================== -->
+
+            <div class="pix-valor">
+
+                <span>
+                    Valor do presente
+                </span>
+
+                <strong id="pix-valor">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <!-- =================================================
+                 QR CODE
+            ================================================== -->
+
+            <div class="pix-qr-area">
+
+                <div
+                    id="pix-qr-loading"
+                    class="pix-loading"
+                >
+                    Gerando seu Pix...
+                </div>
+
+                <img
+                    id="pix-qr-code"
+                    class="pix-qr-code hidden"
+                    alt="QR Code para pagamento Pix"
+                >
+
+            </div>
+
+
+            <!-- =================================================
+                 PIX COPIA E COLA
+            ================================================== -->
 
             <div
-                id="pix-qr-loading"
-                class="pix-loading"
-            >
-                Gerando seu Pix...
-            </div>
-
-            <img
-                id="pix-qr-code"
-                class="pix-qr-code hidden"
-                alt="QR Code para pagamento Pix"
+                id="pix-copia-area"
+                class="pix-copia-area hidden"
             >
 
-        </div>
+                <label for="pix-codigo">
+                    Pix Copia e Cola
+                </label>
 
+                <div class="pix-copia">
 
-        <!-- COPIA E COLA -->
-        <div
-            id="pix-copia-area"
-            class="pix-copia-area hidden"
-        >
+                    <input
+                        type="text"
+                        id="pix-codigo"
+                        readonly
+                        autocomplete="off"
+                    >
 
-            <label for="pix-codigo">
-                Pix Copia e Cola
-            </label>
+                    <button
+                        type="button"
+                        id="btn-copiar-pix"
+                    >
+                        Copiar
+                    </button>
 
-            <div class="pix-copia">
-
-                <input
-                    type="text"
-                    id="pix-codigo"
-                    readonly
-                >
-
-                <button
-                    type="button"
-                    id="btn-copiar-pix"
-                >
-                    Copiar
-                </button>
+                </div>
 
             </div>
 
+
+            <!-- =================================================
+                 STATUS
+            ================================================== -->
+
+            <div
+                id="pix-status"
+                class="pix-status"
+            >
+                Aguardando pagamento...
+            </div>
+
+
+            <!-- Voltar -->
+
+            <button
+                type="button"
+                class="btn-confirmar"
+                onclick="fecharPix()"
+            >
+                Voltar para a lista
+            </button>
+
         </div>
-
-
-        <!-- STATUS -->
-        <div
-            id="pix-status"
-            class="pix-status"
-        >
-            Aguardando pagamento...
-        </div>
-
-
-        <button
-            type="button"
-            class="btn-confirmar"
-            onclick="fecharPix()"
-        >
-            Voltar para a lista
-        </button>
 
     </div>
 
-</div>
 
+    <!-- =====================================================
+         RODAPÉ
+    ====================================================== -->
 
-    <!-- RODAPÉ -->
     <footer>
 
         <p>
@@ -404,7 +447,10 @@
     </footer>
 
 
-    <!-- JAVASCRIPT -->
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
     <script src="script.js"></script>
 
 </body>
